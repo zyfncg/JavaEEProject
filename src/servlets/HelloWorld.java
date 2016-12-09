@@ -1,9 +1,19 @@
 package servlets;
 
+import data.Database;
+
 import java.io.IOException;
 import java.io.PrintWriter;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Date;
 
+import javax.sql.DataSource;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,12 +41,31 @@ public class HelloWorld extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	//	response.getWriter().append("Served at: ").append(request.getContextPath());
+
+		Database db = Database.getInstance();
+		String sql = "select * from test";
+		String result = "";
+
+		try {
+			ResultSet rs = db.query(sql);
+			while (rs.next()){
+				result += rs.getString("name")+"\n";
+			}
+			rs.close();
+			db.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+
+
 		response.setContentType("text/html; charset=utf-8");
 		PrintWriter out = response.getWriter();
 		out.println("<html>");
 		out.println("<head><title>Hello</title></head>");
 		out.println("<body>");
 		out.println("<p>hello ,servlet .at : "+new Date()+"</p>");
+		out.println("<p>hello , "+result+"</p>");
 		out.println("</body></html>");
 
 	}
