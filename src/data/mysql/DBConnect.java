@@ -1,4 +1,4 @@
-package data;
+package data.mysql;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;

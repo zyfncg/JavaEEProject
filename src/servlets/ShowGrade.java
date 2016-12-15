@@ -1,6 +1,6 @@
 package servlets;
 
-import data.Database;
+import data.mysql.Database;
 import model.Grade;
 
 import javax.servlet.ServletException;
@@ -30,7 +30,9 @@ public class ShowGrade extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // TODO Auto-generated method stub
+        request.setCharacterEncoding("utf-8");
         processRequest(request, response);
+
     }
 
     /**
@@ -117,6 +119,7 @@ public class ShowGrade extends HttpServlet {
         try {
             while (ret.next()){
                 String courseName = ret.getString("coursename");
+                System.out.println(courseName);
                 double score = ret.getDouble("grade");
                 Grade grade = new Grade(studentID,courseName,score);
                 list.add(grade);
@@ -128,7 +131,7 @@ public class ShowGrade extends HttpServlet {
     }
     private void displayGradelist(HttpServletRequest req, HttpServletResponse res){
         List list = (List) req.getAttribute("list"); // resp.sendRedirect(req.getContextPath()+"/MyStockList");
-
+        res.setContentType("text/html; charset=utf-8");
         PrintWriter out = null;
         try {
             out = res.getWriter();

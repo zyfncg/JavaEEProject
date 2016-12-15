@@ -1,19 +1,14 @@
 package servlets;
 
-import data.Database;
+import data.mysql.Database;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Date;
 
-import javax.sql.DataSource;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
