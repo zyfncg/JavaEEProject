@@ -7,9 +7,11 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by ZhangYF on 2016/12/9.
@@ -85,7 +87,7 @@ public class ShowGrade extends HttpServlet {
 
                 req.setAttribute("login", loginValue);
                 getGradeList(req, resp);
-                displayMyStocklistPage(req, resp);
+                displayGradelist(req, resp);
                 displayLogoutPage(req, resp);
 
             } else {
@@ -100,17 +102,17 @@ public class ShowGrade extends HttpServlet {
 
             req.setAttribute("login", loginValue);
             getGradeList(req, resp);
-            displayMyStocklistPage(req, resp);
+            displayGradelist(req, resp);
             displayLogoutPage(req, resp);
 
         }
     }
     private void getGradeList(HttpServletRequest req, HttpServletResponse res){
         ResultSet ret = null;
-        ArrayList list = new ArrayList();
+        List list = new ArrayList();
         Database db = Database.getInstance();
         String studentID = (String)req.getAttribute("login");
-        String sql = "select * from stud_cour where studentid='"+ studentID +"'";
+        String sql = "select * from gradeView where studentid='"+ studentID +"';";
         ret = db.query(sql);
         try {
             while (ret.next()){
@@ -125,6 +127,42 @@ public class ShowGrade extends HttpServlet {
         req.setAttribute("list", list);
     }
     private void displayGradelist(HttpServletRequest req, HttpServletResponse res){
+        List list = (List) req.getAttribute("list"); // resp.sendRedirect(req.getContextPath()+"/MyStockList");
+
+        PrintWriter out = null;
+        try {
+            out = res.getWriter();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        out.println("<html><body>");
+        out.println("<table width='650' border='0' >");
+        out.println("<tr>");
+        out.println("<td width='650' height='80' background='" + req.getContextPath() + "/image/top.jpg'>&nbsp;</td>");
+        out.println("</tr>");
+        out.println("</table>");
+        out.println("<p>Welcome " + req.getAttribute("login") + "</p>");
+
+        out.println("My Grade List:  ");
+        System.out.println("gradelist");
+        for (int i = 0; i < list.size(); i++) {
+            Grade grade = (Grade) list.get(i);
+            out.println(grade.getCourseName()+" "+grade.getGrade());
+        }
+        out.println("</p>");
+        // 点击here，刷新该页面，会话有效
+        out.println("Click <a href='" + res.encodeURL(req.getRequestURI()) + "'>here</a> to reload this page.<br>");
+    }
+
+    public void displayLogoutPage(HttpServletRequest req, HttpServletResponse res) throws IOException {
+        PrintWriter out = res.getWriter();
+        // 注销Logout
+        out.println("<form method='GET' action='" + res.encodeURL(req.getContextPath() + "/Login") + "'>");
+        out.println("</p>");
+        out.println("<input type='submit' name='Logout' value='Logout'>");
+        out.println("</form>");
+        out.println("<p>Servlet is version @version@</p>");
+        out.println("</body></html>");
 
     }
 }
