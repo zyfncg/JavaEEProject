@@ -1,5 +1,7 @@
 package servlets;
 
+import data.dataImpl.GradeDataImpl;
+import data.dataService.GradeDataService;
 import data.mysql.Database;
 import model.Grade;
 
@@ -110,23 +112,12 @@ public class ShowGrade extends HttpServlet {
         }
     }
     private void getGradeList(HttpServletRequest req, HttpServletResponse res){
-        ResultSet ret = null;
+
         List list = new ArrayList();
-        Database db = Database.getInstance();
         String studentID = (String)req.getAttribute("login");
-        String sql = "select * from gradeView where studentid='"+ studentID +"';";
-        ret = db.query(sql);
-        try {
-            while (ret.next()){
-                String courseName = ret.getString("coursename");
-                System.out.println(courseName);
-                double score = ret.getDouble("grade");
-                Grade grade = new Grade(studentID,courseName,score);
-                list.add(grade);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
+        GradeDataService gradeData = new GradeDataImpl();
+        list = gradeData.getGradeList(studentID);
         req.setAttribute("list", list);
     }
     private void displayGradelist(HttpServletRequest req, HttpServletResponse res){

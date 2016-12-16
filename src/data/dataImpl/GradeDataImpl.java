@@ -31,6 +31,7 @@ public class GradeDataImpl implements GradeDataService {
                 Grade grade = new Grade(studentid,courseName,score);
                 list.add(grade);
             }
+            connectClose();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -39,6 +40,10 @@ public class GradeDataImpl implements GradeDataService {
 
     private Connection getConnect(){
         return DBConnect.getConnection();
+    }
+
+    private void connectClose(){
+        DBConnect.close();
     }
 
 }
