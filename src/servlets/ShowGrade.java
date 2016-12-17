@@ -122,7 +122,7 @@ public class ShowGrade extends HttpServlet {
     }
     private void displayGradelist(HttpServletRequest req, HttpServletResponse res){
         List list = (List) req.getAttribute("list"); // resp.sendRedirect(req.getContextPath()+"/MyStockList");
-        res.setContentType("text/html; charset=utf-8");
+//        res.setContentType("text/html; charset=utf-8");
         PrintWriter out = null;
         try {
             out = res.getWriter();

@@ -9,7 +9,7 @@ import java.io.PrintWriter;
 /**
  * Created by ZhangYF on 2016/12/14.
  */
-@WebServlet("/Login")
+@WebServlet("/login")
 public class Login extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -61,7 +61,7 @@ public class Login extends HttpServlet {
             }
         }
 
-        response.setContentType("text/html");
+//        response.setContentType("text/html");
         PrintWriter out = response.getWriter();
         out.println("<html><body>");
 
@@ -80,6 +80,7 @@ public class Login extends HttpServlet {
 
 
         out.println("</form></body></html>");
+        System.out.println("login end");
 
     }
 
