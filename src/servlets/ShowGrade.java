@@ -151,7 +151,7 @@ public class ShowGrade extends HttpServlet {
     public void displayLogoutPage(HttpServletRequest req, HttpServletResponse res) throws IOException {
         PrintWriter out = res.getWriter();
         // 注销Logout
-        out.println("<form method='GET' action='" + res.encodeURL(req.getContextPath() + "/Login") + "'>");
+        out.println("<form method='GET' action='" + res.encodeURL(req.getContextPath() + "/login") + "'>");
         out.println("</p>");
         out.println("<input type='submit' name='Logout' value='Logout'>");
         out.println("</form>");
