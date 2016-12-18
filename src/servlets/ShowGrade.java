@@ -48,68 +48,9 @@ public class ShowGrade extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        HttpSession session = req.getSession(false);
-        boolean cookieFound = false;
-        System.out.println(req.getParameter("login") + " req");
-        Cookie cookie = null;
-        Cookie[] cookies = req.getCookies();
-        if (null != cookies) {
-            // Look through all the cookies and see if the
-            // cookie with the login info is there.
-            for (int i = 0; i < cookies.length; i++) {
-                cookie = cookies[i];
-                if (cookie.getName().equals("LoginCookie")) {
-                    cookieFound = true;
-                    break;
-                }
-            }
-        }
-
-        if (session == null) {
-            String loginValue = req.getParameter("login");
-            boolean isLoginAction = (null == loginValue) ? false : true;
-
-            System.out.println(loginValue + " session null");
-            if (isLoginAction) { // User is logging in
-                if (cookieFound) { // If the cookie exists update the value only
-                    // if changed
-                    if (!loginValue.equals(cookie.getValue())) {
-                        cookie.setValue(loginValue);
-                        resp.addCookie(cookie);
-                    }
-                } else {
-                    // If the cookie does not exist, create it and set value
-                    cookie = new Cookie("LoginCookie", loginValue);
-                    cookie.setMaxAge(Integer.MAX_VALUE);
-                    System.out.println("Add cookie");
-                    resp.addCookie(cookie);
-                }
-
-                // create a session to show that we are logged in
-                session = req.getSession(true);
-                session.setAttribute("login", loginValue);
-
-                req.setAttribute("login", loginValue);
-                getGradeList(req, resp);
-                displayGradelist(req, resp);
-                displayLogoutPage(req, resp);
-
-            } else {
-                System.out.println(loginValue + " session null");
-                // Display the login page. If the cookie exists, set login
-                resp.sendRedirect(req.getContextPath() + "/Login");
-            }
-        } else {
-            // 或未注销，重新加载该页面，session不为空
-            String loginValue = (String) session.getAttribute("login");
-            System.out.println(loginValue + " session");
-
-            req.setAttribute("login", loginValue);
-            getGradeList(req, resp);
-            displayGradelist(req, resp);
-            displayLogoutPage(req, resp);
-
-        }
+        getGradeList(req, resp);
+        displayGradelist(req, resp);
+        displayLogoutPage(req, resp);
     }
     private void getGradeList(HttpServletRequest req, HttpServletResponse res){
 
@@ -151,7 +92,7 @@ public class ShowGrade extends HttpServlet {
     public void displayLogoutPage(HttpServletRequest req, HttpServletResponse res) throws IOException {
         PrintWriter out = res.getWriter();
         // 注销Logout
-        out.println("<form method='GET' action='" + res.encodeURL(req.getContextPath() + "/Login") + "'>");
+        out.println("<form method='GET' action='" + res.encodeURL(req.getContextPath() + "/login") + "'>");
         out.println("</p>");
         out.println("<input type='submit' name='Logout' value='Logout'>");
         out.println("</form>");
