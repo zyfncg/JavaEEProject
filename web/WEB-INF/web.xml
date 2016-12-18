@@ -36,4 +36,7 @@
         <url-pattern>/showgrade</url-pattern>
     </filter-mapping>
 
+    <listener>
+        <listener-class>listener.LoginSessionListener</listener-class>
+    </listener>
 </web-app>
