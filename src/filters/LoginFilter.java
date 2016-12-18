@@ -69,6 +69,7 @@ public class LoginFilter implements Filter {
             }
         } else {
             // 或未注销，重新加载该页面，session不为空
+
             String loginValue = (String) session.getAttribute("login");
             System.out.println(loginValue + " session");
             request.setAttribute("login", loginValue);
