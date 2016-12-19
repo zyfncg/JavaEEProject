@@ -42,9 +42,10 @@ public class CharsetFilter implements Filter {
 			}
 //			response = new BufferedResponse((HttpServletResponse)response);
 			response.setContentType("text/html; charset=utf-8");
-//			System.out.println("filter start");
+//			response.setCharacterEncoding("utf-8");
+//			System.out.println("charset filter start");
 			chain.doFilter(request, response);
-//			System.out.println("filter end");
+//			System.out.println("charset filter end");
 
 		}//在servlet处理请求之前截获
 

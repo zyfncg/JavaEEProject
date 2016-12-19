@@ -1,5 +1,8 @@
 package filters;
 
+import data.dataImpl.CheckUserImpl;
+import data.dataService.CheckUserService;
+
 import javax.servlet.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -44,7 +47,10 @@ public class LoginFilter implements Filter {
         } else {
             if(null == session.getAttribute("login")){
                 String loginValue = request.getParameter("login");
-                boolean isLoginAction = (null == loginValue) ? false : true;
+                String userid = loginValue;
+                String password = request.getParameter("password");
+//                boolean isLoginAction = (null == loginValue) ? false : true;
+                boolean isLoginAction = isVaildUser(userid, password);
 
                 if (isLoginAction) { // User is logging in
                     if (cookieFound) { // If the cookie exists update the value only
@@ -70,7 +76,7 @@ public class LoginFilter implements Filter {
 
                     filterChain.doFilter(request,response);
                 }else{
-                    response.sendRedirect(request.getContextPath() + "/login");
+                    response.sendRedirect(request.getContextPath() + "/IDError.jsp");
                 }
             }else{
                 filterChain.doFilter(request,response);
@@ -81,5 +87,10 @@ public class LoginFilter implements Filter {
     @Override
     public void destroy() {
 
+    }
+
+    private boolean isVaildUser(String userid, String psssword){
+        CheckUserService checkUser = new CheckUserImpl();
+        return checkUser.checkUser(userid, psssword);
     }
 }

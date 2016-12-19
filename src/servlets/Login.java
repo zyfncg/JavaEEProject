@@ -80,7 +80,7 @@ public class Login extends HttpServlet {
         out.println("<input type='submit' name='Submit' value='Submit'>");
 
         out.println("<p>Servlet is version @version@</p>");
-        out.println("</p>当前在线人数： " + OnlineSessionListener.getOnlineCounter());
+        out.println("<p>当前在线人数： " + OnlineSessionListener.getOnlineCounter()+"</p>");
 
 
         out.println("</form></body></html>");

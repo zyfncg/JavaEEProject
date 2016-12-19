@@ -20,7 +20,7 @@ public class GradeDataImpl implements GradeDataService {
     @Override
     public List<Grade> getGradeList(String studentid) {
         List list = new ArrayList();
-        Connection conn = getConnect();
+        Connection conn = DBConnect.getConnection();
         try {
             stmt = conn.prepareStatement("select * from gradeView where studentid=?");
             stmt.setString(1,studentid);
@@ -32,19 +32,11 @@ public class GradeDataImpl implements GradeDataService {
                 list.add(grade);
             }
             ret.close();
-            connectClose();
+            stmt.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return list;
-    }
-
-    private Connection getConnect(){
-        return DBConnect.getConnection();
-    }
-
-    private void connectClose(){
-        DBConnect.close();
     }
 
 }
