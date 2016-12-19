@@ -45,6 +45,8 @@ public class CharsetFilter implements Filter {
 //			response.setCharacterEncoding("utf-8");
 //			System.out.println("charset filter start");
 			chain.doFilter(request, response);
+			response.setCharacterEncoding("utf-8");
+
 //			System.out.println("charset filter end");
 
 		}//在servlet处理请求之前截获

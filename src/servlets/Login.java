@@ -67,8 +67,9 @@ public class Login extends HttpServlet {
 
 //        response.setContentType("text/html");
         PrintWriter out = response.getWriter();
-        out.println("<html><body>");
-
+        out.println("<html>");
+        out.println("<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>");
+        out.println("<body>");
         out.println(
                 "<form method='POST' action='"
                         + response.encodeURL(request.getContextPath() + "/showgrade")
@@ -80,7 +81,9 @@ public class Login extends HttpServlet {
         out.println("<input type='submit' name='Submit' value='Submit'>");
 
         out.println("<p>Servlet is version @version@</p>");
-        out.println("<p>当前在线人数： " + OnlineSessionListener.getOnlineCounter()+"</p>");
+        String str = "当前在线人数： ";
+        System.out.println("我靠！！！！！");
+        out.println(str + OnlineSessionListener.getOnlineCounter()+"</p>");
 
 
         out.println("</form></body></html>");
