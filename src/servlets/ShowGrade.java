@@ -3,6 +3,7 @@ package servlets;
 import data.dataImpl.GradeDataImpl;
 import data.dataService.GradeDataService;
 import data.mysql.Database;
+import listener.OnlineSessionListener;
 import model.Grade;
 
 import javax.servlet.ServletException;
@@ -97,6 +98,8 @@ public class ShowGrade extends HttpServlet {
         out.println("<input type='submit' name='Logout' value='Logout'>");
         out.println("</form>");
         out.println("<p>Servlet is version @version@</p>");
+        out.println("</p>当前登录人数： " + OnlineSessionListener.getLoginCounter());
+        out.println("</p>当前在线人数： " + OnlineSessionListener.getOnlineCounter());
         out.println("</body></html>");
 
     }

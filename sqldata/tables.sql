@@ -5,7 +5,10 @@ CREATE TABLE student (
   password char(20) NOT NULL,
   gender char(8)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
-INSERT INTO student(studentid,name,password,gender) VALUES ('141250301','doge','123456','男');
+INSERT INTO student(studentid,name,password,gender) VALUES ('141250301','司马懿','123456','男');
+INSERT INTO student(studentid,name,password,gender) VALUES ('141250302','诸葛亮','123456','男');
+INSERT INTO student(studentid,name,password,gender) VALUES ('141250303','曹植','123456','男');
+INSERT INTO student(studentid,name,password,gender) VALUES ('141250304','刘庆','123456','男');
 
 
 DROP TABLE IF EXISTS course;
@@ -13,7 +16,7 @@ CREATE TABLE course(
   courseid char(10) PRIMARY KEY,
   coursename char(56) NOT NULL
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
-INSERT INTO course(courseid,coursename) VALUES ('1234567890','j2ee于中间件');
+INSERT INTO course(courseid,coursename) VALUES ('1234567890','j2ee与中间件');
 INSERT INTO course(courseid,coursename) VALUES ('1234567891','软件工程');
 INSERT INTO course(courseid,coursename) VALUES ('1234567892','嵌入式');
 INSERT INTO course(courseid,coursename) VALUES ('1234567893','计算系统基础');
@@ -29,6 +32,10 @@ CREATE TABLE stud_cour (
 INSERT INTO stud_cour(studentid,courseid,grade) VALUES ('141250301','1234567890',88);
 INSERT INTO stud_cour(studentid,courseid,grade) VALUES ('141250301','1234567891',76);
 INSERT INTO stud_cour(studentid,courseid) VALUES ('141250301','1234567892');
+INSERT INTO stud_cour(studentid,courseid,grade) VALUES ('141250302','1234567891',86);
+INSERT INTO stud_cour(studentid,courseid,grade) VALUES ('141250302','1234567893',90);
+INSERT INTO stud_cour(studentid,courseid,grade) VALUES ('141250303','1234567891',79);
+INSERT INTO stud_cour(studentid,courseid,grade) VALUES ('141250303','1234567892',66);
 
 DROP VIEW IF EXISTS gradeView;
 CREATE ALGORITHM = UNDEFINED

@@ -37,44 +37,44 @@ public class LoginFilter implements Filter {
         }
 
         if (session == null) {
-            String loginValue = request.getParameter("login");
-            boolean isLoginAction = (null == loginValue) ? false : true;
+            System.out.println("session null");
+            // Display the login page. If the cookie exists, set login
+            response.sendRedirect(request.getContextPath() + "/login");
 
-            if (isLoginAction) { // User is logging in
-                if (cookieFound) { // If the cookie exists update the value only
-                    // if changed
-                    if (!loginValue.equals(cookie.getValue())) {
-                        cookie.setValue(loginValue);
+        } else {
+            if(null == session.getAttribute("login")){
+                String loginValue = request.getParameter("login");
+                boolean isLoginAction = (null == loginValue) ? false : true;
+
+                if (isLoginAction) { // User is logging in
+                    if (cookieFound) { // If the cookie exists update the value only
+                        // if changed
+                        if (!loginValue.equals(cookie.getValue())) {
+                            cookie.setValue(loginValue);
+                            response.addCookie(cookie);
+                        }
+                    } else {
+                        // If the cookie does not exist, create it and set value
+                        cookie = new Cookie("LoginCookie", loginValue);
+                        cookie.setMaxAge(Integer.MAX_VALUE);
+                        System.out.println("Add cookie");
                         response.addCookie(cookie);
                     }
-                } else {
-                    // If the cookie does not exist, create it and set value
-                    cookie = new Cookie("LoginCookie", loginValue);
-                    cookie.setMaxAge(Integer.MAX_VALUE);
-                    System.out.println("Add cookie");
-                    response.addCookie(cookie);
+
+                    // create a session to show that we are logged in
+//                session = request.getSession(true);
+
+                    session.setAttribute("login", loginValue);
+                    request.setAttribute("login", loginValue);
+
+
+                    filterChain.doFilter(request,response);
+                }else{
+                    response.sendRedirect(request.getContextPath() + "/login");
                 }
-
-                // create a session to show that we are logged in
-                session = request.getSession(true);
-                session.setAttribute("login", loginValue);
-                request.setAttribute("login", loginValue);
-
-
+            }else{
                 filterChain.doFilter(request,response);
-            } else {
-                System.out.println(loginValue + " session null");
-                // Display the login page. If the cookie exists, set login
-                response.sendRedirect(request.getContextPath() + "/login");
             }
-        } else {
-            // 或未注销，重新加载该页面，session不为空
-
-            String loginValue = (String) session.getAttribute("login");
-            System.out.println(loginValue + " session");
-            request.setAttribute("login", loginValue);
-
-            filterChain.doFilter(request,response);
         }
     }
 

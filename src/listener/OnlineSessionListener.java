@@ -1,14 +1,11 @@
 package listener;
 
-import javax.servlet.http.HttpSessionAttributeListener;
-import javax.servlet.http.HttpSessionBindingEvent;
-import javax.servlet.http.HttpSessionEvent;
-import javax.servlet.http.HttpSessionListener;
+import javax.servlet.http.*;
 
 /**
  * Created by ZhangYF on 2016/12/17.
  */
-public class LoginSessionListener implements HttpSessionListener,HttpSessionAttributeListener{
+public class OnlineSessionListener implements HttpSessionListener,HttpSessionAttributeListener{
 
     private static long onlineCounter = 0;
     private static long loginCounter = 0l;
@@ -21,6 +18,7 @@ public class LoginSessionListener implements HttpSessionListener,HttpSessionAttr
 
     @Override
     public void sessionDestroyed(HttpSessionEvent httpSessionEvent) {
+        HttpSession session = httpSessionEvent.getSession();
         subOnlineNum();
         System.out.println("online number : "+ getOnlineCounter());
     }
@@ -33,13 +31,15 @@ public class LoginSessionListener implements HttpSessionListener,HttpSessionAttr
 
     @Override
     public void attributeRemoved(HttpSessionBindingEvent se) {
-        subLoginNum();
-        System.out.println("login number : "+ getLoginCounter());
+        if("login".equals(se.getName())){
+            subLoginNum();
+            System.out.println("login number : "+ getLoginCounter());
+        }
     }
 
     @Override
     public void attributeReplaced(HttpSessionBindingEvent se) {
-
+        System.out.println("attributeReplaced");
     }
 
     private synchronized void addOnlineNum(){

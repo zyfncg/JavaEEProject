@@ -31,6 +31,7 @@ public class GradeDataImpl implements GradeDataService {
                 Grade grade = new Grade(studentid,courseName,score);
                 list.add(grade);
             }
+            ret.close();
             connectClose();
         } catch (SQLException e) {
             e.printStackTrace();

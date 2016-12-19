@@ -1,5 +1,7 @@
 package servlets;
 
+import listener.OnlineSessionListener;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
@@ -41,6 +43,9 @@ public class Login extends HttpServlet {
 
         Integer ival = new Integer(1);
 
+        if (session == null){
+            session = request.getSession(true);
+        }
         if (null != cookies) {
             // Look through all the cookies and see if the
             // cookie with the login info is there.
@@ -55,9 +60,8 @@ public class Login extends HttpServlet {
 
         // Logout action removes session, but the cookie remains
         if (null != request.getParameter("Logout")) {
-            if (null != session) {
-                session.invalidate();
-                session = null;
+            if (null != session.getAttribute("login")) {
+                session.removeAttribute("login");
             }
         }
 
@@ -76,7 +80,7 @@ public class Login extends HttpServlet {
         out.println("<input type='submit' name='Submit' value='Submit'>");
 
         out.println("<p>Servlet is version @version@</p>");
-//    out.println("</p>You are visitor number " + webCounter);
+        out.println("</p>当前在线人数： " + OnlineSessionListener.getOnlineCounter());
 
 
         out.println("</form></body></html>");

@@ -42,6 +42,6 @@
     </filter-mapping>
 
     <listener>
-        <listener-class>listener.LoginSessionListener</listener-class>
+        <listener-class>listener.OnlineSessionListener</listener-class>
     </listener>
 </web-app>
