@@ -19,7 +19,7 @@ public class GradeDataImpl implements GradeDataService {
     ResultSet ret = null;
     @Override
     public List<Grade> getGradeList(String studentid) {
-        List list = new ArrayList();
+        List<Grade> list = new ArrayList<>();
         Connection conn = DBConnect.getConnection();
         try {
             stmt = conn.prepareStatement("select * from gradeView where studentid=?");
@@ -27,8 +27,14 @@ public class GradeDataImpl implements GradeDataService {
             ret = stmt.executeQuery();
             while (ret.next()){
                 String courseName = ret.getString("coursename");
+
+                double exam = ret.getDouble("exam");
+                double lab = ret.getDouble("lab");
                 double score = ret.getDouble("grade");
-                Grade grade = new Grade(studentid,courseName,score);
+                Grade grade = new Grade(studentid,courseName,exam,lab,score);
+                if(ret.getString("grade") == null){
+                    grade.setTest(false);
+                }
                 list.add(grade);
             }
             ret.close();

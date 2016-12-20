@@ -80,10 +80,8 @@ public class Login extends HttpServlet {
                 "password: <input type='password' name='password' value=''>");
         out.println("<input type='submit' name='Submit' value='Submit'>");
 
-        out.println("<p>Servlet is version @version@</p>");
         String str = "当前在线人数： ";
-        System.out.println("我靠！！！！！");
-        out.println(str + OnlineSessionListener.getOnlineCounter()+"</p>");
+        out.println("<p>"+str + OnlineSessionListener.getOnlineCounter()+"</p>");
 
 
         out.println("</form></body></html>");

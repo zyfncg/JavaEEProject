@@ -57,7 +57,9 @@ public class ShowGrade extends HttpServlet {
 
         List list = new ArrayList();
         String studentID = (String)req.getAttribute("login");
-
+        if(studentID == null){
+            studentID = (String)req.getSession().getAttribute("login");
+        }
         GradeDataService gradeData = new GradeDataImpl();
         list = gradeData.getGradeList(studentID);
         req.setAttribute("list", list);
@@ -77,15 +79,33 @@ public class ShowGrade extends HttpServlet {
         out.println("<td width='650' height='80' background='" + req.getContextPath() + "/image/top.jpg'>&nbsp;</td>");
         out.println("</tr>");
         out.println("</table>");
-        out.println("<p>Welcome " + req.getAttribute("login") + "</p>");
+        out.println("<p>Welcome " + req.getSession().getAttribute("login") + "</p>");
 
         out.println("My Grade List:  ");
-        System.out.println("gradelist");
+        out.println("<table width='450' border='1'>");
+        out.println("<tr><th>课程</th><th>笔试</th><th>实验</th><th>总成绩</th></tr>");
+
+
         for (int i = 0; i < list.size(); i++) {
-            Grade grade = (Grade) list.get(i);
-            out.println(grade.getCourseName()+" "+grade.getGrade());
+
+            Grade grade = (Grade)list.get(i);
+//            out.println(grade.getCourseName()+" "+grade.getGrade());
+            out.println("<tr>");
+            out.println("<td>"+grade.getCourseName()+"</td>");
+            if(grade.isTest()){
+                out.println("<td>"+grade.getExam()+"</td>");
+                out.println("<td>"+grade.getLab()+"</td>");
+                out.println("<td>"+grade.getGrade()+"</td>");
+            }else{
+                out.println("<td style='color:red'>未测验</td>");
+                out.println("<td style='color:red'>未测验</td>");
+                out.println("<td style='color:red'>未测验</td>");
+                out.println("<script>alert('有未参加的测验')</script>");
+            }
+
+            out.println("</tr>");
         }
-        out.println("</p>");
+        out.println("</table>");
         // 点击here，刷新该页面，会话有效
         out.println("Click <a href='" + res.encodeURL(req.getRequestURI()) + "'>here</a> to reload this page.<br>");
     }
@@ -97,7 +117,6 @@ public class ShowGrade extends HttpServlet {
         out.println("</p>");
         out.println("<input type='submit' name='Logout' value='Logout'>");
         out.println("</form>");
-        out.println("<p>Servlet is version @version@</p>");
         out.println("<p>当前登录人数： " + OnlineSessionListener.getLoginCounter()+"</p>");
         out.println("<p>当前在线人数： " + OnlineSessionListener.getOnlineCounter()+"</p>");
         out.println("</body></html>");

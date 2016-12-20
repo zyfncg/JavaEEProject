@@ -26,19 +26,21 @@ DROP TABLE IF EXISTS stud_cour;
 CREATE TABLE stud_cour (
   studentid char(9),
   courseid char(10),
+  exam double,
+  lab double,
   grade double,
   primary key (studentid,courseid)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
-INSERT INTO stud_cour(studentid,courseid,grade) VALUES ('141250301','1234567890',88);
-INSERT INTO stud_cour(studentid,courseid,grade) VALUES ('141250301','1234567891',76);
+INSERT INTO stud_cour(studentid,courseid,exam,lab,grade) VALUES ('141250301','1234567890',66,22,88);
+INSERT INTO stud_cour(studentid,courseid,exam,lab,grade) VALUES ('141250301','1234567891',56,20,76);
 INSERT INTO stud_cour(studentid,courseid) VALUES ('141250301','1234567892');
-INSERT INTO stud_cour(studentid,courseid,grade) VALUES ('141250302','1234567891',86);
-INSERT INTO stud_cour(studentid,courseid,grade) VALUES ('141250302','1234567893',90);
-INSERT INTO stud_cour(studentid,courseid,grade) VALUES ('141250303','1234567891',79);
-INSERT INTO stud_cour(studentid,courseid,grade) VALUES ('141250303','1234567892',66);
+INSERT INTO stud_cour(studentid,courseid,exam,lab,grade) VALUES ('141250302','1234567891',67,19,86);
+INSERT INTO stud_cour(studentid,courseid,exam,lab,grade) VALUES ('141250302','1234567893',64,26,90);
+INSERT INTO stud_cour(studentid,courseid,exam,lab,grade) VALUES ('141250303','1234567891',55,24,79);
+INSERT INTO stud_cour(studentid,courseid,exam,lab,grade) VALUES ('141250303','1234567892',48,18,66);
 
 DROP VIEW IF EXISTS gradeView;
 CREATE ALGORITHM = UNDEFINED
 VIEW gradeView AS
-  SELECT student.studentid,student.name,coursename,grade FROM student,course,stud_cour
+  SELECT student.studentid,student.name,coursename,exam,lab,grade FROM student,course,stud_cour
   WHERE student.studentid=stud_cour.studentid AND course.courseid=stud_cour.courseid;
