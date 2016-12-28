@@ -1,7 +1,7 @@
 package filters;
 
-import dao.daoImpl.CheckUserImpl;
-import dao.daoService.CheckUserService;
+import dao.daoImpl.StudentDaoImpl;
+import dao.daoService.StudentDao;
 
 import javax.servlet.*;
 import javax.servlet.http.Cookie;
@@ -90,7 +90,7 @@ public class LoginFilter implements Filter {
     }
 
     private boolean isVaildUser(String userid, String psssword){
-        CheckUserService checkUser = new CheckUserImpl();
-        return checkUser.checkUser(userid, psssword);
+        StudentDao checkUser = new StudentDaoImpl();
+        return checkUser.checkPassword(userid, psssword);
     }
 }
