@@ -1,4 +1,4 @@
-package data.dataService;
+package dao.daoService;
 
 /**
  * Created by Zhang YF on 2016/12/19.

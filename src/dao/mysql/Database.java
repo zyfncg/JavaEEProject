@@ -1,4 +1,4 @@
-package data.mysql;
+package dao.mysql;
 
 import java.sql.*;
 

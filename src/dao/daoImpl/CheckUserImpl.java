@@ -1,8 +1,7 @@
-package data.dataImpl;
+package dao.daoImpl;
 
-import data.dataService.CheckUserService;
-import data.mysql.DBConnect;
-import model.Grade;
+import dao.daoService.CheckUserService;
+import dao.mysql.DBConnect;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -1,8 +1,7 @@
 package servlets;
 
-import data.dataImpl.GradeDataImpl;
-import data.dataService.GradeDataService;
-import data.mysql.Database;
+import dao.daoImpl.GradeDaoImpl;
+import dao.daoService.GradeDao;
 import listener.OnlineSessionListener;
 import model.Grade;
 
@@ -11,8 +10,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,7 +57,7 @@ public class ShowGrade extends HttpServlet {
         if(studentID == null){
             studentID = (String)req.getSession().getAttribute("login");
         }
-        GradeDataService gradeData = new GradeDataImpl();
+        GradeDao gradeData = new GradeDaoImpl();
         list = gradeData.getGradeList(studentID);
         req.setAttribute("list", list);
     }

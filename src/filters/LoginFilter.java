@@ -1,7 +1,7 @@
 package filters;
 
-import data.dataImpl.CheckUserImpl;
-import data.dataService.CheckUserService;
+import dao.daoImpl.CheckUserImpl;
+import dao.daoService.CheckUserService;
 
 import javax.servlet.*;
 import javax.servlet.http.Cookie;

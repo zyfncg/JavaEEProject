@@ -1,7 +1,7 @@
-package data.dataImpl;
+package dao.daoImpl;
 
-import data.dataService.GradeDataService;
-import data.mysql.DBConnect;
+import dao.daoService.GradeDao;
+import dao.mysql.DBConnect;
 import model.Grade;
 
 import java.sql.Connection;
@@ -14,13 +14,23 @@ import java.util.List;
 /**
  * Created by Zhang YF on 2016/12/15.
  */
-public class GradeDataImpl implements GradeDataService {
-    PreparedStatement stmt = null;
-    ResultSet ret = null;
+public class GradeDaoImpl implements GradeDao {
+
+    private static GradeDaoImpl gradeDao = new GradeDaoImpl();
+    private static Connection conn;
+    private GradeDaoImpl() {
+        conn = DBConnect.getConnection();
+    }
+
+    public static GradeDao getInstance(){
+        return gradeDao;
+    }
     @Override
     public List<Grade> getGradeList(String studentid) {
+        PreparedStatement stmt = null;
+        ResultSet ret = null;
         List<Grade> list = new ArrayList<>();
-        Connection conn = DBConnect.getConnection();
+
         try {
             stmt = conn.prepareStatement("select * from gradeView where studentid=?");
             stmt.setString(1,studentid);
