@@ -25,8 +25,11 @@ public class OnlineSessionListener implements HttpSessionListener,HttpSessionAtt
 
     @Override
     public void attributeAdded(HttpSessionBindingEvent se) {
-        addLoginNum();
-        System.out.println("login number : "+ getLoginCounter());
+        if("login".equals(se.getName())){
+            addLoginNum();
+            System.out.println("login number : "+ getLoginCounter());
+        }
+
     }
 
     @Override

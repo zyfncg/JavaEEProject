@@ -2,6 +2,8 @@ package servlets;
 
 import dao.daoImpl.GradeDaoImpl;
 import dao.daoService.GradeDao;
+import factory.DaoFactory;
+import factory.ServiceFactory;
 import listener.OnlineSessionListener;
 import model.Grade;
 
@@ -57,8 +59,7 @@ public class ShowGrade extends HttpServlet {
         if(studentID == null){
             studentID = (String)req.getSession().getAttribute("login");
         }
-        GradeDao gradeData = new GradeDaoImpl();
-        list = gradeData.getGradeList(studentID);
+        list = ServiceFactory.getGradeManageService().getGrade(studentID);
         req.setAttribute("list", list);
     }
     private void displayGradelist(HttpServletRequest req, HttpServletResponse res){

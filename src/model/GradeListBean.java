@@ -16,4 +16,8 @@ public class GradeListBean implements Serializable{
     public void setGradeList(List<Grade> gradeList) {
         this.gradeList = gradeList;
     }
+
+    public Grade getGrade(int index){
+        return gradeList.get(index);
+    }
 }

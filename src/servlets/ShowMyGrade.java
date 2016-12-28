@@ -17,6 +17,7 @@ import java.io.IOException;
  */
 @WebServlet("/showmygrade")
 public class ShowMyGrade extends HttpServlet{
+    private static final long serialVersionUID = 1L;
     public ShowMyGrade() {
         super();
     }
@@ -39,21 +40,29 @@ public class ShowMyGrade extends HttpServlet{
             throws IOException {
         HttpSession session = req.getSession(true);
         ServletContext context = getServletContext();
-        GradeListBean gradelist = new GradeListBean();
+        GradeListBean gradeList = new GradeListBean();
         String studentid = (String)session.getAttribute("login");
         //listStock.setStockList(DaoFactory.getStockDao().find());
-        gradelist.setGradeList(ServiceFactory.getGradeManageService().getGrade(studentid));
+        gradeList.setGradeList(ServiceFactory.getGradeManageService().getGrade(studentid));
         try {
-            if (gradelist.getGradeList().size() < 1) {
-                context.getRequestDispatcher("/stock/noListStock.jsp").forward(
+            if (gradeList.getGradeList().size() < 1) {
+                System.out.println("eeeeeeeeeeeeeeeeeeee start");
+                context.getRequestDispatcher("/IDError.jsp").forward(
                         req, resp);
+                System.out.println("50 gradelist null");
             } else {
-                session.setAttribute("gradelist", gradelist);
-                context.getRequestDispatcher("/stock/listStock.jsp").forward(
+                System.out.println("ssssssssssssssssssssssssssssssssssss start");
+                session.setAttribute("gradelist", gradeList);
+                if(gradeList != null){
+                    System.out.println(gradeList.getGrade(0).getCourseName());
+                }
+                context.getRequestDispatcher("/view/grade/myGrade.jsp").forward(
                         req, resp);
+                System.out.println("55 grade id ok");
             }
         } catch (ServletException e) {
             // System error - report error 500 and message
+            e.printStackTrace();
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
                     "This is a ServletException.");
         }

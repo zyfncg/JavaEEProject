@@ -2,6 +2,7 @@ package filters;
 
 import dao.daoImpl.StudentDaoImpl;
 import dao.daoService.StudentDao;
+import factory.DaoFactory;
 
 import javax.servlet.*;
 import javax.servlet.http.Cookie;
@@ -90,7 +91,7 @@ public class LoginFilter implements Filter {
     }
 
     private boolean isVaildUser(String userid, String psssword){
-        StudentDao checkUser = new StudentDaoImpl();
+        StudentDao checkUser = DaoFactory.getStudentDao();
         return checkUser.checkPassword(userid, psssword);
     }
 }
