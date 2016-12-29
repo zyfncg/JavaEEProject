@@ -38,28 +38,23 @@ public class ShowMyGrade extends HttpServlet{
     }
     private void processRequest(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
-        HttpSession session = req.getSession(true);
+        HttpSession session = req.getSession(false);
         ServletContext context = getServletContext();
         GradeListBean gradeList = new GradeListBean();
-        String studentid = (String)session.getAttribute("login");
-        //listStock.setStockList(DaoFactory.getStockDao().find());
-        gradeList.setGradeList(ServiceFactory.getGradeManageService().getGrade(studentid));
-        try {
-            if (gradeList.getGradeList().size() < 1) {
-                System.out.println("eeeeeeeeeeeeeeeeeeee start");
-                context.getRequestDispatcher("/IDError.jsp").forward(
-                        req, resp);
-                System.out.println("50 gradelist null");
-            } else {
-                System.out.println("ssssssssssssssssssssssssssssssssssss start");
-                session.setAttribute("gradelist", gradeList);
-                if(gradeList != null){
-                    System.out.println(gradeList.getGrade(0).getCourseName());
-                }
-                context.getRequestDispatcher("/view/grade/myGrade.jsp").forward(
-                        req, resp);
-                System.out.println("55 grade id ok");
+        if(null != session){
+            String studentid = (String)session.getAttribute("login");
+            if(null != studentid){
+                gradeList.setGradeList(ServiceFactory.getGradeManageService().getGrade(studentid));
             }
+            session.setAttribute("gradelist", gradeList);
+        }
+
+        try {
+            System.out.println("ssssssssssssssssssssssssssssssssssss start");
+
+            context.getRequestDispatcher("/view/grade/myGrade.jsp").forward(
+                    req, resp);
+            System.out.println("55 grade id ok");
         } catch (ServletException e) {
             // System error - report error 500 and message
             e.printStackTrace();

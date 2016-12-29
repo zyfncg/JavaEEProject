@@ -25,20 +25,7 @@ public class LoginFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest)servletRequest;
         HttpServletResponse response = (HttpServletResponse)servletResponse;
         HttpSession session = request.getSession(false);
-        boolean cookieFound = false;
-        Cookie cookie = null;
-        Cookie[] cookies = request.getCookies();
-        if (null != cookies) {
-            // Look through all the cookies and see if the
-            // cookie with the login info is there.
-            for (int i = 0; i < cookies.length; i++) {
-                cookie = cookies[i];
-                if (cookie.getName().equals("LoginCookie")) {
-                    cookieFound = true;
-                    break;
-                }
-            }
-        }
+
 
         if (session == null) {
             System.out.println("session null");
@@ -46,42 +33,7 @@ public class LoginFilter implements Filter {
             response.sendRedirect(request.getContextPath() + "/login");
 
         } else {
-            if(null == session.getAttribute("login")){
-                String loginValue = request.getParameter("login");
-                String userid = loginValue;
-                String password = request.getParameter("password");
-//                boolean isLoginAction = (null == loginValue) ? false : true;
-                boolean isLoginAction = isVaildUser(userid, password);
-
-                if (isLoginAction) { // User is logging in
-                    if (cookieFound) { // If the cookie exists update the value only
-                        // if changed
-                        if (!loginValue.equals(cookie.getValue())) {
-                            cookie.setValue(loginValue);
-                            response.addCookie(cookie);
-                        }
-                    } else {
-                        // If the cookie does not exist, create it and set value
-                        cookie = new Cookie("LoginCookie", loginValue);
-                        cookie.setMaxAge(Integer.MAX_VALUE);
-                        System.out.println("Add cookie");
-                        response.addCookie(cookie);
-                    }
-
-                    // create a session to show that we are logged in
-//                session = request.getSession(true);
-
-                    session.setAttribute("login", loginValue);
-                    request.setAttribute("login", loginValue);
-
-
-                    filterChain.doFilter(request,response);
-                }else{
-                    response.sendRedirect(request.getContextPath() + "/IDError.jsp");
-                }
-            }else{
-                filterChain.doFilter(request,response);
-            }
+            filterChain.doFilter(request,response);
         }
     }
 
@@ -90,8 +42,4 @@ public class LoginFilter implements Filter {
 
     }
 
-    private boolean isVaildUser(String userid, String psssword){
-        StudentDao checkUser = DaoFactory.getStudentDao();
-        return checkUser.checkPassword(userid, psssword);
-    }
 }
