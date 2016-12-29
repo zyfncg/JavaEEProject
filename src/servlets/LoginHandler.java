@@ -2,7 +2,10 @@ package servlets;
 
 import dao.daoService.StudentDao;
 import factory.DaoFactory;
+import factory.ServiceFactory;
 import listener.OnlineSessionListener;
+import service.StudentManageService;
+import service.impl.StudentManageServiceImpl;
 
 import javax.jws.WebService;
 import javax.servlet.ServletException;
@@ -92,8 +95,8 @@ public class LoginHandler extends HttpServlet{
     }
 
     private boolean isVaildUser(String userid, String psssword){
-        StudentDao checkUser = DaoFactory.getStudentDao();
-        return checkUser.checkPassword(userid, psssword);
+        StudentManageService studentManageService = ServiceFactory.getStudentManageService();
+        return studentManageService.checkPassword(userid, psssword);
     }
 
 }
