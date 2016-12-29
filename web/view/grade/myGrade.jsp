@@ -4,12 +4,17 @@
   User: ZhangYF
   Date: 2016/12/28
   Time: 20:28
-  To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Theme style  -->
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 <p>welcome <%=request.getSession().getAttribute("login") %></p>
@@ -18,8 +23,11 @@
 <%
     for (int i = 0; i < gradelist.getGradeList().size(); i++) {
     Grade grade = gradelist.getGrade(i);
+    if(0 == i%3){
+        out.println("<div class='row' style='height:240px;padding-left:36px;'>");
+    }
 %>
-<div class="course-item">
+<div class="course-item col-md-4">
     <h3><%=grade.getCourseName()%></h3>
     <div class="grade">
         <div class="score-element">
@@ -36,7 +44,12 @@
         </div>
     </div>
 </div>
-<%}%>
+<%
+        if(2 == i%3){
+            out.println("</div>");
+        }
+    }
+%>
 <p>Click <a href="<%=response.encodeURL(request.getRequestURL().toString())%>">here</a> to reload this page.</p>
 <br>
 <form method='GET' action="<%=response.encodeURL(request.getContextPath()+"/login")%>">

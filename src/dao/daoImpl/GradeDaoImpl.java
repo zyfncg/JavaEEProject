@@ -19,7 +19,7 @@ public class GradeDaoImpl implements GradeDao {
     private static GradeDaoImpl gradeDao = new GradeDaoImpl();
     private static Connection conn;
     private GradeDaoImpl() {
-        conn = DBConnect.getConnection();
+
     }
 
     public static GradeDao getInstance(){
@@ -30,7 +30,7 @@ public class GradeDaoImpl implements GradeDao {
         PreparedStatement stmt = null;
         ResultSet ret = null;
         List<Grade> list = new ArrayList<>();
-
+        conn = DBConnect.getConnection();
         try {
             stmt = conn.prepareStatement("select * from gradeView where studentid=?");
             stmt.setString(1,studentid);
