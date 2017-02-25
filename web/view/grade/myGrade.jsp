@@ -1,5 +1,5 @@
-<%@ page import="listener.OnlineSessionListener" %>
-<%@ page import="model.Grade" %><%--
+<%@ page import="edu.nju.j2ee.listener.OnlineSessionListener" %>
+<%@ page import="edu.nju.j2ee.model.Grade" %><%--
   Created by IntelliJ IDEA.
   User: ZhangYF
   Date: 2016/12/28
@@ -22,7 +22,7 @@
 <check:checklogin/>
 <div class="grade-page">
 <p>welcome <%=request.getSession().getAttribute("login") %></p>
-<jsp:useBean id="gradelist" type="model.GradeListBean" scope="session"/>
+<jsp:useBean id="gradelist" type="edu.nju.j2ee.model.GradeListBean" scope="session"/>
 
 <%
     for (int i = 0; i < gradelist.getGradeList().size(); i++) {

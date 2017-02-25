@@ -8,7 +8,7 @@
     <short-name>check</short-name>
     <tag>
         <name>checklogin</name>
-        <tag-class>tag.CheckHandler</tag-class>
+        <tag-class>edu.nju.j2ee.tag.CheckHandler</tag-class>
         <body-content>empty</body-content>
     </tag>
 </taglib>
