@@ -22,30 +22,10 @@ public class CheckHandler extends BodyTagSupport {
     @Override
     public int doStartTag() throws JspException {
 
-        HttpSession session = pageContext.getSession();
-        HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
-        HttpServletResponse response = (HttpServletResponse) pageContext.getResponse();
-        if(null == session){
-            try {
-                response.sendRedirect(request.getContextPath() + "/login");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return SKIP_PAGE;
-        }else{
-            String login = (String)session.getAttribute("login");
-            if(null == login){
-                try {
-                    response.sendRedirect(request.getContextPath() + "/login");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                return SKIP_PAGE;
-            }
-        }
 
         return SKIP_BODY;
     }
+
 
     @Override
     public void doInitBody() throws JspException {
@@ -65,6 +45,32 @@ public class CheckHandler extends BodyTagSupport {
 
     @Override
     public int doEndTag() throws JspException {
-        return super.doEndTag();
+        System.out.println("tld process");
+        HttpSession session = pageContext.getSession();
+        HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
+        HttpServletResponse response = (HttpServletResponse) pageContext.getResponse();
+        if(null == session){
+            System.out.println("session is null!!!!");
+            try {
+                response.sendRedirect(request.getContextPath() + "/login");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return SKIP_PAGE;
+        }else{
+            String login = (String)session.getAttribute("login");
+            if(null == login){
+                System.out.println("login is null!!!!");
+                System.out.println(request.getContextPath() + "/login");
+                try {
+                    response.sendRedirect(request.getContextPath() + "/login");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return SKIP_PAGE;
+            }
+        }
+        System.out.println("check passed");
+        return EVAL_PAGE;
     }
 }

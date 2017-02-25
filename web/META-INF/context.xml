@@ -1,6 +1,0 @@
-<Context>
-    <Resource name="jdbc/j2ee" auth="Container" type="javax.sql.DataSource"
-              maxTotal="50" maxIdle="30" maxWaitMillis="10000" logAbandoned="true"
-              username="zyfncg" password="X1231z60" driverClassName="com.mysql.jdbc.Driver"
-              url="jdbc:mysql://115.159.161.87:3306/j2ee?autoReconnect=true&amp;useSSL=false"/>
-</Context>

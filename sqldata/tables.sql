@@ -24,6 +24,7 @@ INSERT INTO course(courseid,coursename) VALUES ('1234567893','计算系统基础
 
 DROP TABLE IF EXISTS stud_cour;
 CREATE TABLE stud_cour (
+
   studentid char(9),
   courseid char(10),
   exam double,

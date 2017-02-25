@@ -1,14 +1,12 @@
 package dao.daoImpl;
 
 import dao.daoService.GradeDao;
-import dao.mysql.DBConnect;
+import dao.hibernateSession.SessionConnect;
 import model.Grade;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,7 +15,6 @@ import java.util.List;
 public class GradeDaoImpl implements GradeDao {
 
     private static GradeDaoImpl gradeDao = new GradeDaoImpl();
-    private static Connection conn;
     private GradeDaoImpl() {
 
     }
@@ -27,32 +24,15 @@ public class GradeDaoImpl implements GradeDao {
     }
     @Override
     public List<Grade> getGradeList(String studentid) {
-        PreparedStatement stmt = null;
-        ResultSet ret = null;
-        List<Grade> list = new ArrayList<>();
-        conn = DBConnect.getConnection();
-        try {
-            stmt = conn.prepareStatement("select * from gradeView where studentid=?");
-            stmt.setString(1,studentid);
-            ret = stmt.executeQuery();
-            while (ret.next()){
-                String courseName = ret.getString("coursename");
 
-                double exam = ret.getDouble("exam");
-                double lab = ret.getDouble("lab");
-                double score = ret.getDouble("grade");
-                Grade grade = new Grade(studentid,courseName,exam,lab,score);
-                if(ret.getString("grade") == null){
-                    grade.setTest(false);
-                }
-                list.add(grade);
-            }
-            ret.close();
-            stmt.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return list;
+        Session session = SessionConnect.getSession();
+        Transaction tx=session.beginTransaction();
+        Query query = session.createQuery("SELECT g FROM Grade g WHERE g.student.studentid = :studentid");
+        List<Grade> grades = query.setParameter("studentid",studentid).list();
+//        List<Grade> grades = (List<Grade>) session.createQuery("FROM Grade g where g").list();
+
+        session.close();
+        return grades;
     }
 
 }
