@@ -1,7 +1,8 @@
 package edu.nju.j2ee.servlets;
 
-import edu.nju.j2ee.factory.ServiceFactory;
 import edu.nju.j2ee.model.GradeListBean;
+import edu.nju.j2ee.service.GradeManageService;
+import org.springframework.context.ApplicationContext;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -44,7 +45,8 @@ public class ShowMyGrade extends HttpServlet{
         if(null != session){
             String studentid = (String)session.getAttribute("login");
             if(null != studentid){
-                gradeList.setGradeList(ServiceFactory.getGradeManageService().getGrade(studentid));
+                GradeManageService gradeManageService = (GradeManageService) SpringContextUtil.getBean("gradeManageService");
+                gradeList.setGradeList(gradeManageService.getGrade(studentid));
             }
             session.setAttribute("gradelist", gradeList);
         }

@@ -1,7 +1,7 @@
 package edu.nju.j2ee.servlets;
 
-import edu.nju.j2ee.factory.ServiceFactory;
 import edu.nju.j2ee.service.StudentManageService;
+import org.springframework.context.ApplicationContext;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -89,7 +89,7 @@ public class LoginHandler extends HttpServlet{
     }
 
     private boolean isVaildUser(String userid, String psssword){
-        StudentManageService studentManageService = ServiceFactory.getStudentManageService();
+        StudentManageService studentManageService = (StudentManageService) SpringContextUtil.getBean("studentManageService");
         return studentManageService.checkPassword(userid, psssword);
     }
 

@@ -7,7 +7,8 @@ import org.junit.Test;
  * Created by ZhangYF on 2017/2/7.
  */
 public class StudentDaoTest {
-    private StudentDao studentDao = StudentDaoImpl.getInstance();
+
+    private StudentDao studentDao;
 
     @Test
     public void checkPassword() throws Exception {

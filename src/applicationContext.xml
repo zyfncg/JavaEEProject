@@ -14,7 +14,8 @@
       http://www.springframework.org/schema/cache
       http://www.springframework.org/schema/cache/spring-cache-4.3.xsd">
 
-    <bean id="StudentManageService" class="edu.nju.j2ee.service.impl.StudentManageServiceImpl"/>
+    <bean id="studentManageService" class="edu.nju.j2ee.service.impl.StudentManageServiceImpl"/>
+    <bean id="gradeManageService" class="edu.nju.j2ee.service.impl.GradeManageServiceImpl"/>
 
     <context:component-scan base-package="edu.nju.j2ee"/>
 
@@ -55,7 +56,8 @@
     <!-- 声明式容器事务管理 ,transaction-manager指定事务管理器为transactionManager -->
     <tx:advice id="txAdvice" transaction-manager="transactionManager">
         <tx:attributes>
-            <tx:method name="*User" propagation="REQUIRED" />
+            <tx:method name="get*" propagation="REQUIRED" />
+            <tx:method name="check*" propagation="REQUIRED" />
             <tx:method name="*" propagation="NOT_SUPPORTED" read-only="true" />
         </tx:attributes>
     </tx:advice>
