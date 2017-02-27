@@ -12,8 +12,15 @@
 
 		<action name="loginCheck" class="edu.nju.j2ee.action.CheckAction">
 
-			<result name="success">/view/grade/myGrade.jsp</result>
+			<result name="success" type="redirectAction">showmygrade</result>
+			<result name="login">/view/login.jsp</result>
+			<result name="fail">/view/IDError.jsp</result>
 
+		</action>
+		<action name="showmygrade" class="edu.nju.j2ee.action.GradeAction">
+
+			<result name="success">/view/grade/myGrade.jsp</result>
+			<result name="login">/view/login.jsp</result>
 			<result name="fail">/view/IDError.jsp</result>
 
 		</action>

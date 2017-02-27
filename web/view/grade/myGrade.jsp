@@ -1,5 +1,6 @@
 <%@ page import="edu.nju.j2ee.listener.OnlineSessionListener" %>
-<%@ page import="edu.nju.j2ee.model.Grade" %><%--
+<%@ page import="edu.nju.j2ee.model.Grade" %>
+<%@ page import="edu.nju.j2ee.model.GradeListBean" %><%--
   Created by IntelliJ IDEA.
   User: ZhangYF
   Date: 2016/12/28
@@ -7,6 +8,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="/WEB-INF/tlds/taglib.tld" prefix="check" %>
+<%@ taglib prefix="s" uri="/struts-tags" %>
 
 <html>
 <head>
@@ -22,9 +24,8 @@
 <check:checklogin/>
 <div class="grade-page">
 <p>welcome <%=request.getSession().getAttribute("login") %></p>
-<jsp:useBean id="gradelist" type="edu.nju.j2ee.model.GradeListBean" scope="session"/>
-
 <%
+    GradeListBean gradelist = (GradeListBean)request.getSession().getAttribute("gradelist");
     for (int i = 0; i < gradelist.getGradeList().size(); i++) {
     Grade grade = gradelist.getGrade(i);
     if(grade.getExam() == null||grade.getLab() == null||grade.getGrade() == null){

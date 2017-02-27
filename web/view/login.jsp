@@ -18,29 +18,13 @@
 </head>
 <body>
 
-<%
-    Cookie[] cookies = request.getCookies();
-    Cookie cookie = null;
-    String login = "";
-    if (null != cookies) {
-        // Look through all the cookies and see if the cookie with the login info is there.
-        for (int i = 0; i < cookies.length; i++) {
-            cookie = cookies[i];
-            if (cookie.getName().equals("LoginCookie")) {
-                login=cookie.getValue();
-                break;
-            }
-        }
-    }
-
-%>
     <div class="login-body">
-        <form method='POST' action='<%=response.encodeURL(request.getContextPath() + "/checklogin")%>'>
-            <input type='text' class="studentid form-control" name='login' value="<%=login%>" placeholder="学号" required>
-            <input type='password' class="password form-control" name='password' placeholder="密码" required>
-            <input type='submit' class="submit-btn btn btn-lg btn-primary btn-block" name='Submit' value='Submit'>
+        <s:form method='POST' action='loginCheck'>
+            <s:textfield class="input studentid form-control" name='studentid' placeholder="学号"/>
+            <s:password class="input password form-control" name='password' placeholder="密码" />
+            <s:submit class="submit-btn btn btn-lg btn-primary btn-block" name='Submit' value='Submit'/>
 
-        </form>
+        </s:form>
         <br>
         <h3>当前在线人数： <%=OnlineSessionListener.getOnlineCounter()%></h3>
     </div>
