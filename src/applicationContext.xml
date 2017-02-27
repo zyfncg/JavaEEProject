@@ -16,7 +16,7 @@
 
     <bean id="studentManageService" class="edu.nju.j2ee.service.impl.StudentManageServiceImpl"/>
     <bean id="gradeManageService" class="edu.nju.j2ee.service.impl.GradeManageServiceImpl"/>
-
+    <bean id="loginAction" class="edu.nju.j2ee.action.LoginAction"/>
     <context:component-scan base-package="edu.nju.j2ee"/>
 
     <bean id="dataSource"

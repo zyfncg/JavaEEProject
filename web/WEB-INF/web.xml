@@ -10,6 +10,18 @@
         <welcome-file>login</welcome-file>
     </welcome-file-list>
 
+    <display-name>Struts Blank</display-name>
+
+    <filter>
+        <filter-name>struts2</filter-name>
+        <filter-class>org.apache.struts2.dispatcher.filter.StrutsPrepareAndExecuteFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>struts2</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
     <session-config>
         <session-timeout>1</session-timeout>
     </session-config>
